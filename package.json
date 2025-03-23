@@ -10,7 +10,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx}",
-    "format": "prettier --write src/**/*.{js,jsx,css,md}"
+    "format": "prettier --write src/**/*.{js,jsx,css,md}",
+      "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [
     "accessibility",

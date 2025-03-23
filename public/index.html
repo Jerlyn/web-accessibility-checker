@@ -3,6 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+<script>
+  // Fix for %PUBLIC_URL% not being replaced
+  document.querySelectorAll('[href^="%PUBLIC_URL%"], [src^="%PUBLIC_URL%"]').forEach(el => {
+    const attr = el.hasAttribute('href') ? 'href' : 'src';
+    el[attr] = el[attr].replace(/%PUBLIC_URL%/g, '.');
+  });
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
