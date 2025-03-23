@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Accessibility Examples - Fixed</title>
+  <style>
+    .button {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #0066cc;
+      color: white;
+      cursor: pointer;
+    }
+    
+    /* Fixed contrast ratio (4.5:1 minimum for normal text) */
+    .better-contrast {
+      color: #595959;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Added H1 as the main page title -->
+  <h1>Accessibility Examples</h1>
+  
+  <h2>This is now a proper H2 under the H1</h2>
+  
+  <!-- Added descriptive alt text -->
+  <img src="logo.png" alt="Company Logo">
+  
+  <!-- Proper decorative image indication -->
+  <img src="decorative-line.png" alt="" role="presentation">
+  
+  <!-- Form with proper labels -->
+  <form>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password">
+    </div>
+    <div>
+      <input type="checkbox" name="remember" id="remember">
+      <label for="remember">Remember me</label>
+    </div>
+    <div>
+      <input type="submit" value="Login">
+    </div>
+  </form>
+  
+  <!-- Descriptive link text -->
+  <p>Learn more about our <a href="services.html">comprehensive service offerings</a>.</p>
+  <p><a href="about.html">About our company history and mission</a></p>
+  
+  <!-- No empty links, added descriptive text -->
+  <a href="home.html">Return to home page</a>
+  
+  <!-- Proper heading structure -->
+  <h2>Section Title</h2>
+  <p>Some content here...</p>
+  <h3>Proper heading level (was H4)</h3>
+  
+  <!-- Used proper button element -->
+  <button onclick="submitForm()" class="button">Submit</button>
+  
+  <!-- Table with proper headers -->
+  <table>
+    <caption>Product Pricing</caption>
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Price</th>
+    </tr>
+    <tr>
+      <td>Product A</td>
+      <td>$10.00</td>
+    </tr>
+    <tr>
+      <td>Product B</td>
+      <td>$15.00</td>
+    </tr>
+  </table>
+  
+  <!-- Layout table with proper role -->
+  <table role="presentation">
+    <tr>
+      <td>
+        <p>Left column content</p>
+      </td>
+      <td>
+        <p>Right column content</p>
+      </td>
+    </tr>
+  </table>
+  
+  <!-- Fixed tabindex values -->
+  <a href="contact.html" tabindex="0">Contact Us</a>
+  <a href="faq.html" tabindex="0">FAQ</a>
+  
+  <!-- Fixed color contrast -->
+  <p class="better-contrast">This text now has sufficient contrast with its background.</p>
+  
+  <!-- Fixed ARIA role -->
+  <div role="status">This now has a valid ARIA role</div>
+  
+  <!-- Added required ARIA attributes -->
+  <div role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck()" onkeydown="if(event.key === 'Enter' || event.key === ' ') toggleCheck()">
+    Accept terms
+  </div>
+  
+  <!-- Added keyboard access to custom control -->
+  <span tabindex="0" role="button" onclick="showPopup()" onkeydown="if(event.key === 'Enter') showPopup()">
+    Show Details
+  </span>
+</body>
+</html>
