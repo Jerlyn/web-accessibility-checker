@@ -31,14 +31,14 @@ function App() {
         <AccessibilityChecker />
       </main>
       <footer>
-        <div className="container">
-          <p>
+        <div className="footer-container">
+          <p className="footer-text">
             Created with a commitment to making the web accessible to all.
           </p>
           <div className="footer-links">
-            <a href="https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2" target="_blank" rel="noopener noreferrer">WCAG 2.2 Guidelines</a>
-            <a href="https://www.w3.org/WAI/tutorials/" target="_blank" rel="noopener noreferrer">W3C Tutorials</a>
-            <a href="https://github.com/Jerlyn/web-accessibility-checker" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+            <a href="https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2" target="_blank" rel="noopener noreferrer" className="footer-link">WCAG 2.2 Guidelines</a>
+            <a href="https://www.w3.org/WAI/tutorials/" target="_blank" rel="noopener noreferrer" className="footer-link">W3C Tutorials</a>
+            <a href="https://github.com/Jerlyn/web-accessibility-checker" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub Repository</a>
           </div>
         </div>
       </footer>
