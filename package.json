@@ -1,8 +1,10 @@
 {
+  
   "name": "web-accessibility-checker",
   "version": "1.0.0",
   "description": "An interactive tool that helps developers identify and fix common accessibility issues in their web projects",
-  "main": "src/index.js",
+  "main": "src/index.js", 
+  "homepage": "https://jerlyn.github.io/web-accessibility-checker/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
