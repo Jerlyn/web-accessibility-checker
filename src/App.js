@@ -1,29 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AccessibilityChecker from './components/AccessibilityChecker';
 import './App.css';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check for system preference on mount
+  useEffect(() => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setDarkMode(prefersDark);
+  }, []);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="container mx-auto py-6">
-          <h1 className="text-3xl font-bold text-center mb-2">Web Accessibility Checker</h1>
-          <p className="text-center text-gray-600 mb-8">Identify and fix accessibility issues in your web projects</p>
-        </div>
-      </header>
-      <main className="container mx-auto px-4 pb-12">
+    <div className={`App ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+      <div className="theme-toggle">
+        <button 
+          onClick={toggleDarkMode} 
+          className="theme-toggle-button"
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
+      <main id="main-content">
         <AccessibilityChecker />
       </main>
-      <footer className="bg-gray-100 py-6 mt-12">
-        <div className="container mx-auto px-4">
-          <p className="text-center text-gray-600">
+      <footer>
+        <div className="container">
+          <p>
             Created with a commitment to making the web accessible to all.
           </p>
-          <p className="text-center text-gray-500 text-sm mt-2">
-            <a href="https://github.com/YourUsername/web-accessibility-checker" className="text-blue-600 hover:underline">
-              GitHub Repository
-            </a>
-          </p>
+          <div className="footer-links">
+            <a href="https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2" target="_blank" rel="noopener noreferrer">WCAG 2.2 Guidelines</a>
+            <a href="https://www.w3.org/WAI/tutorials/" target="_blank" rel="noopener noreferrer">W3C Tutorials</a>
+            <a href="https://github.com/Jerlyn/web-accessibility-checker" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+          </div>
         </div>
       </footer>
     </div>

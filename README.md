@@ -31,7 +31,7 @@ Visit [https://your-accessibility-checker-url.com](https://your-accessibility-ch
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YourUsername/web-accessibility-checker.git
+   git clone https://github.com/Jerlyn/web-accessibility-checker.git
    cd web-accessibility-checker
    ```
 

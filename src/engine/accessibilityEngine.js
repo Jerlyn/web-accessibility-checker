@@ -59,7 +59,7 @@ function runImageAltTextCheck(doc, results) {
         position,
         codeSnippet: getElementOuterHTML(img),
         fixExample: getElementOuterHTML(img).replace('<img ', '<img alt="Descriptive text about this image" '),
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/images/decision-tree/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#non-text-content',
       });
     } else if (img.getAttribute('alt') === '') {
       // Empty alt text is only appropriate for decorative images
@@ -75,7 +75,7 @@ function runImageAltTextCheck(doc, results) {
 ${getElementOuterHTML(img)}
 <!-- If informative: -->
 ${getElementOuterHTML(img).replace('alt=""', 'alt="Descriptive text about this image"')}`,
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/images/decorative/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#info-and-relationships',
       });
     }
   });
@@ -125,7 +125,7 @@ function runHeadingStructureCheck(doc, results) {
           new RegExp(`</h${nextLevel}>`, 'g'), 
           `</h${currentLevel + 1}>`
         ),
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/page-structure/headings/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#headings-and-labels',
       });
     }
   }
@@ -165,7 +165,7 @@ function runFormLabelCheck(doc, results) {
         fixExample: !id 
           ? `<label for="unique-id">Label text</label>\n${getElementOuterHTML(control).replace('<' + control.tagName.toLowerCase(), '<' + control.tagName.toLowerCase() + ' id="unique-id"')}` 
           : `<label for="${id}">Label text</label>\n${getElementOuterHTML(control)}`,
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/forms/labels/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#labels-or-instructions',
       });
     }
   });
@@ -235,7 +235,7 @@ function runLinkPurposeCheck(doc, results) {
           linkText, 
           `Specific description of link destination`
         ),
-        learnMoreUrl: 'https://www.w3.org/WAI/tips/writing/#make-link-text-meaningful',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#link-purpose-in-context',
       });
     }
     
@@ -391,7 +391,7 @@ function runKeyboardNavigationCheck(doc, results) {
         fixExample: getElementOuterHTML(element)
           .replace('<div', '<div role="button" tabindex="0" onkeydown="if(event.key === \'Enter\') this.click()"')
           .replace('<span', '<span role="button" tabindex="0" onkeydown="if(event.key === \'Enter\') this.click()"'),
-        learnMoreUrl: 'https://www.w3.org/WAI/ARIA/apg/patterns/button/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#name-role-value',
       });
     }
   });
@@ -444,7 +444,7 @@ function runButtonRoleCheck(doc, results) {
 ${getElementOuterHTML(element)
   .replace(`<${element.tagName.toLowerCase()}`, 
   `<${element.tagName.toLowerCase()} role="button" tabindex="0" onkeydown="if(event.key === 'Enter') this.click()"`)}`,
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/forms/button-markup/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#name-role-value',
       });
     }
   });
@@ -483,7 +483,7 @@ function runTableStructureCheck(doc, results) {
     </tr>
   </tbody>
 </table>`,
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/tables/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#focus-order',
       });
     }
     
@@ -507,7 +507,7 @@ function runTableStructureCheck(doc, results) {
 </table>
 
 <!-- Better modern solution: Use CSS for layout instead of tables -->`,
-        learnMoreUrl: 'https://www.w3.org/WAI/tutorials/tables/presentation/',
+        learnMoreUrl: 'https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2#language-of-page',
       });
     }
   });
@@ -540,19 +540,77 @@ function getElementOuterHTML(element) {
 
 /**
  * Apply all fixes to the original HTML code
- * This is simplified - a real implementation would be more sophisticated
  */
 function applyFixes(originalHtml, issues) {
-  // This is a very simplified approach - a real implementation would need
-  // to parse the HTML and make targeted changes with proper validation
-  
   let fixedHtml = originalHtml;
   
-  // Apply simple text replacements for demonstration
-  // In reality, you'd need a proper HTML parser and modifier
-  issues.forEach(issue => {
-    if (issue.codeSnippet && issue.fixExample && !issue.fixExample.includes('<!-- ')) {
-      fixedHtml = fixedHtml.replace(issue.codeSnippet, issue.fixExample);
+  // Sort issues by position line/column in reverse order (bottom to top)
+  // This prevents position changes from affecting later fixes
+  const sortedIssues = [...issues].sort((a, b) => {
+    if (b.position.line !== a.position.line) {
+      return b.position.line - a.position.line;
+    }
+    return b.position.column - a.position.column;
+  });
+  
+  // Apply each fix
+  sortedIssues.forEach(issue => {
+    // Handle special insertion cases first
+    if (issue.insertBefore && issue.insertContent) {
+      // For issues that need to insert content before an element
+      if (issue.codeSnippet && fixedHtml.includes(issue.codeSnippet)) {
+        fixedHtml = fixedHtml.replace(issue.codeSnippet, `${issue.insertContent}\n${issue.codeSnippet}`);
+      }
+    } 
+    else if (issue.insertAfter && issue.insertContent) {
+      // For issues that need to insert content after an element
+      if (fixedHtml.includes(issue.insertAfter)) {
+        fixedHtml = fixedHtml.replace(issue.insertAfter, `${issue.insertAfter}${issue.insertContent}`);
+      }
+    }
+    // Regular code snippet replacement
+    else if (issue.codeSnippet && issue.fixExample) {
+      // Extract the fix from examples that may contain comments
+      let fixContent = issue.fixExample;
+      
+      // If the fix contains HTML comments with alternatives, extract the first recommended alternative
+      if (fixContent.includes('<!-- ')) {
+        const alternatives = fixContent.split(/<!--.*?-->/g)
+          .map(part => part.trim())
+          .filter(part => part.length > 0);
+        
+        if (alternatives.length > 0) {
+          fixContent = alternatives[0];
+        }
+      }
+      
+      // Apply the fix
+      if (fixContent) {
+        // For exact match, do direct replacement
+        if (fixedHtml.includes(issue.codeSnippet)) {
+          fixedHtml = fixedHtml.replace(issue.codeSnippet, fixContent);
+        } 
+        // If not found, try to do a more context-aware replacement
+        else {
+          // This is a simplified approach - a real implementation would
+          // use a proper HTML parser for precise replacement
+          const lines = fixedHtml.split('\n');
+          const targetLine = issue.position.line - 1; // 0-based index
+          
+          if (targetLine >= 0 && targetLine < lines.length) {
+            // Simple heuristic: check if some part of the code snippet is in the line
+            const snippetWords = issue.codeSnippet.split(/[<>\s="']/);
+            const lineContainsSnippet = snippetWords.some(word => 
+              word.length > 3 && lines[targetLine].includes(word)
+            );
+            
+            if (lineContainsSnippet) {
+              lines[targetLine] = fixContent;
+              fixedHtml = lines.join('\n');
+            }
+          }
+        }
+      }
     }
   });
   
