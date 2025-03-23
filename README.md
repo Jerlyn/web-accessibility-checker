@@ -2,7 +2,7 @@
 
 An interactive tool to help developers identify and fix common accessibility issues in web projects.
 
-![Accessibility Checker Screenshot](https://via.placeholder.com/800x450.png?text=Accessibility+Checker+Screenshot)
+![Accessibility Checker Screenshot](weba11y.png)
 
 ## Features
 
@@ -25,7 +25,7 @@ Accessibility isn't just about compliance—it's about creating web experiences 
 
 ### Online Version
 
-Visit [https://your-accessibility-checker-url.com](https://your-accessibility-checker-url.com) to use the tool without installation.
+Visit [https://jerlyn.github.io/web-accessibility-checker/](https://jerlyn.github.io/web-accessibility-checker/) to use the tool without installation.
 
 ### Local Installation
 
@@ -123,8 +123,8 @@ Created by [Your Name] with a commitment to making the web accessible to everyon
 
 <div align="center">
   <p>
-    <a href="https://twitter.com/your-twitter">Twitter</a> •
-    <a href="https://your-blog.com">Blog</a> •
-    <a href="https://github.com/YourUsername">GitHub</a>
+    <a href="https://www.designlady.com/">Design Lady LLC</a> •
+    <a href="https://www.linkedin.com/in/jerlyn/">LinkedIn</a> •
+    <a href="https://github.com/Jerlyn/">GitHub</a>
   </p>
 </div>
