@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/web-accessibility-checker/static/css/main.1f283692.css",
+    "main.js": "/web-accessibility-checker/static/js/main.500dc0b8.js",
+    "index.html": "/web-accessibility-checker/index.html",
+    "main.1f283692.css.map": "/web-accessibility-checker/static/css/main.1f283692.css.map",
+    "main.500dc0b8.js.map": "/web-accessibility-checker/static/js/main.500dc0b8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1f283692.css",
+    "static/js/main.500dc0b8.js"
+  ]
+}
